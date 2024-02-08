@@ -9,6 +9,7 @@ public class VendingMachine {
     Scanner scanner = new Scanner(System.in);
     private SortedMap<String, Slot> slots = new TreeMap<>();
     private Account account = new Account();
+    private Logger logger = new Logger();
 
     public VendingMachine() {
         String fileName = "vendingmachine.csv";
@@ -90,7 +91,9 @@ public class VendingMachine {
         String input = scanner.nextLine();
         try {
             int deposit = Integer.parseInt(input);
-            if (!account.deposit(deposit)) {
+            if (account.deposit(deposit)) {
+                logger.info("put money");
+            }else {
                 System.out.printf("\u001b[31mInvalid amount:\u001b[0m %d%n", deposit);
             }
         } catch (Exception e) {
@@ -112,6 +115,7 @@ public class VendingMachine {
                 //System.out.println(itemPrice);
                 if (account.withdraw(itemPrice)) {
                     slots.get(input).dispense();
+                    logger.info("successful purchase");
                     System.out.println("Successful purchase.");
                 } else {
                     System.out.println("Insufficient funds.");
@@ -126,6 +130,6 @@ public class VendingMachine {
     }
 
     private void finishTransaction() {
-
+        logger.info("finish transaction");
     }
 }
