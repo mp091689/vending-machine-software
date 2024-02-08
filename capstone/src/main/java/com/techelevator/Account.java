@@ -15,7 +15,11 @@ public class Account {
         return false;
     }
 
-    public void withdraw(Double amount) {
+    public boolean withdraw(Double amount) {
+        if (balance - amount < 0) {
+            return false;
+        }
         this.balance -= amount;
+        return true;
     }
 }

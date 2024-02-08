@@ -99,6 +99,29 @@ public class VendingMachine {
 
     private void selectProduct() {
         displayItems();
+        System.out.println();
+        System.out.print("Please enter your selection: ");
+        String input = scanner.nextLine().toUpperCase();
+
+        if (slots.containsKey(input)) {
+            int itemQuantity = slots.get(input).getQuantity();
+            //System.out.println(itemQuantity);
+            if (itemQuantity > 0) {
+                double itemPrice = slots.get(input).getItem().getPrice();
+                //System.out.println(itemPrice);
+                if (account.withdraw(itemPrice)) {
+                    slots.get(input).dispense();
+                    System.out.println("Successful purchase.");
+                } else {
+                    System.out.println("Insufficient funds.");
+                }
+            } else {
+                System.out.println("Item is out of stock.");
+            }
+
+        } else {
+            System.out.println("Item not found.");
+        }
     }
 
     private void finishTransaction() {
