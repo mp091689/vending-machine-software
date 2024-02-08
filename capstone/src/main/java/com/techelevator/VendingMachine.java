@@ -15,6 +15,11 @@ public class VendingMachine {
         try(Scanner fileScanner = new Scanner(new File(fileName))){
             while(fileScanner.hasNextLine()) {
                 Item item = new Item(fileScanner.nextLine());
+                Slot slot = new Slot(item);
+                slots.put(item.getSlotLocation(), slot);
+            }
+            for (Map.Entry<String, Slot> element : slots.entrySet()) {
+                System.out.println(element.getKey() + ": " + element.getValue());
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);

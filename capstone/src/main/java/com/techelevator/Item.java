@@ -1,6 +1,16 @@
 package com.techelevator;
 
 public class Item {
+    @Override
+    public String toString() {
+        return "Item{" +
+                "name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", slotLocation='" + slotLocation + '\'' +
+                ", price=" + price +
+                '}';
+    }
+
     private String name;
     private String type;
     private String slotLocation;
