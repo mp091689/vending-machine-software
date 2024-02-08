@@ -2,20 +2,17 @@ package com.techelevator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.InputMismatchException;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class VendingMachine {
-    private Map<String, Slot> slots = new HashMap<>();
-    private Account account = new Account();
     Scanner scanner = new Scanner(System.in);
+    private SortedMap<String, Slot> slots = new TreeMap<>();
+    private Account account = new Account();
 
     public VendingMachine() {
         String fileName = "vendingmachine.csv";
-        try(Scanner fileScanner = new Scanner(new File(fileName))){
-            while(fileScanner.hasNextLine()) {
+        try (Scanner fileScanner = new Scanner(new File(fileName))) {
+            while (fileScanner.hasNextLine()) {
                 Item item = new Item(fileScanner.nextLine());
                 Slot slot = new Slot(item);
                 slots.put(item.getSlotLocation(), slot);
@@ -25,7 +22,8 @@ public class VendingMachine {
             throw new RuntimeException(e);
         }
     }
-    public void mainMenu(){
+
+    public void mainMenu() {
 
         String inputChoice = "";
         do {
@@ -34,24 +32,34 @@ public class VendingMachine {
             System.out.println("(2) Purchase");
             System.out.println("(3) Exit");
             inputChoice = scanner.nextLine();
-            if(inputChoice.equals("1")){
+            if (inputChoice.equals("1")) {
                 displayItems();
-            }else if(inputChoice.equals("2")){
+            } else if (inputChoice.equals("2")) {
                 purchaseMenu();
             }
-        }while(!inputChoice.equals("3"));
+        } while (!inputChoice.equals("3"));
 
     }
-    private void displayItems(){
+
+    private void displayItems() {
+        System.out.printf("\033[4m%-5s %-20s %s\033[0m%n", "Slot", "Item Name", "Price");
         for (Map.Entry<String, Slot> element : slots.entrySet()) {
-            System.out.println(element.getKey() + ": " + element.getValue());
+            String location = element.getKey();
+            String name = element.getValue().getItem().getName();
+            String pricePlace = "$" + element.getValue().getItem().getPrice().toString();
+            if (element.getValue().getQuantity() <= 0) {
+                pricePlace = "SOLD OUT";
+            }
+            System.out.printf("\u001b[32m%-5s\u001b[0m %-20s %s%n", location, name, pricePlace);
         }
+        System.out.println();
     }
-    private void purchaseMenu(){
+
+    private void purchaseMenu() {
         String inputChoice;
         boolean keepGoing = true;
         do {
-            System.out.println("Current Money Provided: $" + account.getBalance() );
+            System.out.println("Current Money Provided: $" + account.getBalance());
             System.out.println();
             System.out.println("(1) Feed Money");
             System.out.println("(2) Select Product");
@@ -72,10 +80,11 @@ public class VendingMachine {
                     System.out.println("Please choose one of the options above");
                     break;
             }
-        }while(keepGoing);
+        } while (keepGoing);
 
     }
-    private void feedMoney(){
+
+    private void feedMoney() {
         System.out.print("Enter amount of deposit in dollars: ");
         String input = scanner.nextLine();
         try {
@@ -88,10 +97,11 @@ public class VendingMachine {
         }
     }
 
-    private void selectProduct(){
-
+    private void selectProduct() {
+        displayItems();
     }
-    private void finishTransaction(){
+
+    private void finishTransaction() {
 
     }
 }
