@@ -1,25 +1,27 @@
 package com.techelevator;
 
-public class Account {
-    private Double balance = 0.0;
+import java.math.BigDecimal;
 
-    public Double getBalance() {
+public class Account {
+    private BigDecimal balance = new BigDecimal("0.0");
+
+    public BigDecimal getBalance() {
         return balance;
     }
 
     public boolean deposit(int amount) {
         if (amount > 0) {
-            this.balance += amount;
+            balance = balance.add(BigDecimal.valueOf(amount));
             return true;
         }
         return false;
     }
 
-    public boolean withdraw(Double amount) {
-        if (balance - amount < 0) {
+    public boolean withdraw(BigDecimal amount) {
+        if (balance.subtract(amount).compareTo(BigDecimal.ZERO)<1) {
             return false;
         }
-        this.balance -= amount;
+        balance = balance.subtract(amount);
         return true;
     }
 }

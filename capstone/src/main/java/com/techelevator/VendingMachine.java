@@ -2,6 +2,7 @@ package com.techelevator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
 import java.util.*;
 
 public class VendingMachine {
@@ -107,7 +108,7 @@ public class VendingMachine {
             int itemQuantity = slots.get(input).getQuantity();
             //System.out.println(itemQuantity);
             if (itemQuantity > 0) {
-                double itemPrice = slots.get(input).getItem().getPrice();
+                BigDecimal itemPrice = slots.get(input).getItem().getPrice();
                 //System.out.println(itemPrice);
                 if (account.withdraw(itemPrice)) {
                     slots.get(input).dispense();

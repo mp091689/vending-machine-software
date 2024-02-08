@@ -1,5 +1,7 @@
 package com.techelevator;
 
+import java.math.BigDecimal;
+
 public class Item {
     @Override
     public String toString() {
@@ -14,13 +16,13 @@ public class Item {
     private String name;
     private String type;
     private String slotLocation;
-    private Double price;
+    private BigDecimal price;
 
     public Item(String input) {
         String[] parts = input.split(",");
         this.slotLocation = parts[0];
         this.name = parts[1];
-        this.price = Double.parseDouble(parts[2]);
+        this.price = new BigDecimal(parts[2]);
         this.type = parts[3];
     }
 
@@ -36,7 +38,7 @@ public class Item {
         return slotLocation;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 }
