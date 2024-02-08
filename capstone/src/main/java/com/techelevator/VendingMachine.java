@@ -18,11 +18,29 @@ public class VendingMachine {
                 Slot slot = new Slot(item);
                 slots.put(item.getSlotLocation(), slot);
             }
-            for (Map.Entry<String, Slot> element : slots.entrySet()) {
-                System.out.println(element.getKey() + ": " + element.getValue());
-            }
+
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
+        }
+    }
+    public void mainMenu(){
+        Scanner scanner = new Scanner(System.in);
+        String inputChoice = "";
+        do {
+            System.out.println();
+            System.out.println("(1) Display Vending Machine Items");
+            System.out.println("(2) Purchase");
+            System.out.println("(3) Exit");
+            inputChoice = scanner.nextLine();
+            if(inputChoice.equals("1")){
+                displayItems();
+            }
+        }while(!inputChoice.equals("3"));
+        
+    }
+    private void displayItems(){
+        for (Map.Entry<String, Slot> element : slots.entrySet()) {
+            System.out.println(element.getKey() + ": " + element.getValue());
         }
     }
 }
