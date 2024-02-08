@@ -1,6 +1,14 @@
 package com.techelevator;
 
 public class Slot {
+    @Override
+    public String toString() {
+        return "Slot{" +
+                "quantity=" + quantity +
+                ", item=" + item +
+                '}';
+    }
+
     private int quantity = 5;
     private Item item;
 
