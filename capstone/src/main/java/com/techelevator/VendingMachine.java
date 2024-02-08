@@ -3,11 +3,13 @@ package com.techelevator;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
 
 public class VendingMachine {
     private Map<String, Slot> slots = new HashMap<>();
+    private Account account = new Account();
     Scanner scanner = new Scanner(System.in);
 
     public VendingMachine() {
@@ -46,31 +48,46 @@ public class VendingMachine {
         }
     }
     private void purchaseMenu(){
-        String inputChoice = "";
+        String inputChoice;
         boolean keepGoing = true;
         do {
-            System.out.println("Current Money Provided: $"  );
+            System.out.println("Current Money Provided: $" + account.getBalance() );
             System.out.println();
             System.out.println("(1) Feed Money");
             System.out.println("(2) Select Product");
             System.out.println("(3) Finish Transaction");
             inputChoice = scanner.nextLine();
-            if(inputChoice.equals("1")){
-                feedMoney();
-            }else if(inputChoice.equals("2")){
-                selectProduct();
-            }else if(inputChoice.equals("3")){
-                finishTransaction();
-                keepGoing = false;
-            }else{
-                System.out.println("Please choose one of the options above");
+            switch (inputChoice) {
+                case "1":
+                    feedMoney();
+                    break;
+                case "2":
+                    selectProduct();
+                    break;
+                case "3":
+                    finishTransaction();
+                    keepGoing = false;
+                    break;
+                default:
+                    System.out.println("Please choose one of the options above");
+                    break;
             }
         }while(keepGoing);
 
     }
-    private double feedMoney(){
-        return 0.0;
+    private void feedMoney(){
+        System.out.print("Enter amount of deposit in dollars: ");
+        String input = scanner.nextLine();
+        try {
+            int deposit = Integer.parseInt(input);
+            if (!account.deposit(deposit)) {
+                System.out.printf("\u001b[31mInvalid amount:\u001b[0m %d%n", deposit);
+            }
+        } catch (Exception e) {
+            System.out.printf("\u001b[31mInvalid input:\u001b[0m %s%n", input);
+        }
     }
+
     private void selectProduct(){
 
     }
