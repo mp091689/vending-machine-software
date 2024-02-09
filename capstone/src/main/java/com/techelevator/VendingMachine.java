@@ -30,6 +30,8 @@ public class VendingMachine {
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
+        } catch (UnknownAnimalException e) {
+            System.out.println("Unknown animal");
         }
     }
 

@@ -58,7 +58,7 @@ public class Item {
         return price;
     }
 
-    public void makeSound() {
-        System.out.println(sound);
+    public String getSound() {
+        return sound;
     }
 }
