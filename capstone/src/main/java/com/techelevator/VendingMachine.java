@@ -88,7 +88,7 @@ public class VendingMachine {
                     feedMoney();
                     break;
                 case "2":
-                    selectProduct();
+                    System.out.println(selectProduct());
                     break;
                 case "3":
                     finishTransaction();
@@ -103,8 +103,8 @@ public class VendingMachine {
     }
 
     private void salesReport() {
-        String fileNameDateTimeStamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM-dd-yyyy-HH:mm:ss"));
-        Logger salesLogger = new Logger("report_" + fileNameDateTimeStamp + ".csv");
+        String fileNameDateTimeStamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM-dd-yyyy-HH:mm:ss-a"));
+        Logger salesLogger = new Logger("Sales_Report_" + fileNameDateTimeStamp + ".csv");
         salesLogger.setPrefixTimeStamp(false);
         BigDecimal total = new BigDecimal(0);
         total.setScale(2);
@@ -135,29 +135,28 @@ public class VendingMachine {
         }
     }
 
-    private void selectProduct() {
+    private String selectProduct() {
         displayItems();
         System.out.println();
         System.out.print("Please enter your selection: ");
         String input = scanner.nextLine().toUpperCase();
 
-        if (slots.containsKey(input)) {
-            int itemQuantity = slots.get(input).getQuantity();
-            if (itemQuantity > 0) {
-                BigDecimal itemPrice = slots.get(input).getPrice();
-                if (account.withdraw(itemPrice)) {
-                    slots.get(input).dispense();
-                    logger.info(slots.get(input).getName() + ": $" + itemPrice + " $" + account.getBalance());
-                } else {
-                    System.out.println("Insufficient funds.");
-                }
-            } else {
-                System.out.println("Item is out of stock.");
-            }
-
-        } else {
-            System.out.println("Item not found.");
+        if (!slots.containsKey(input)) {
+            return "Item not found.";
         }
+
+        if (slots.get(input).getQuantity() <= 0) {
+            return "Item is out of stock.";
+        }
+
+        BigDecimal itemPrice = slots.get(input).getPrice();
+        if (!account.withdraw(itemPrice)) {
+            return "Insufficient funds.";
+        }
+
+        slots.get(input).dispense();
+        logger.info(slots.get(input).getName() + ": $" + itemPrice + " $" + account.getBalance());
+        return slots.get(input).getItem().getSound();
     }
 
     private void finishTransaction() {
