@@ -24,16 +24,16 @@ public class Account {
         balance = balance.subtract(amount);
         return true;
     }
-    public BigDecimal returnCoins(){
+
+    public BigDecimal returnCoins() {
         int balancePennies = balance.multiply(new BigDecimal(100)).intValue();
-        int[] coins = new int[3];
-        coins[0]=balancePennies/25;
-        coins[1]=(balancePennies%25)/10;
-        coins[2]=((balancePennies%25)%10)/5;
-        System.out.println("Your return coins are " + coins[0] + "quarters");
-        System.out.println("Your return coins are " + coins[1] + "dimes");
-        System.out.println("Your return coins are " + coins[2] + "nickels");
-        int payBack = (coins[0]*25 + coins[1]*10) + coins[2]*5;
+        int quarters = balancePennies / 25;
+        int dimes = (balancePennies % 25) / 10;
+        int nickels = ((balancePennies % 25) % 10) / 5;
+        System.out.println("Your return coins are " + quarters + "quarters");
+        System.out.println("Your return coins are " + dimes + "dimes");
+        System.out.println("Your return coins are " + nickels + "nickels");
+        int payBack = (quarters * 25 + dimes * 10) + nickels * 5;
 
         BigDecimal finalPennies = new BigDecimal(payBack);
         BigDecimal finalDollars = finalPennies.divide(new BigDecimal(100));

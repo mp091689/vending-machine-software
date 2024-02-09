@@ -17,6 +17,7 @@ public class Item {
     private String type;
     private String slotLocation;
     private BigDecimal price;
+    private String sound;
 
     public Item(String input) {
         String[] parts = input.split(",");
@@ -24,6 +25,20 @@ public class Item {
         this.name = parts[1];
         this.price = new BigDecimal(parts[2]);
         this.type = parts[3];
+        switch (parts[3]) {
+            case "Duck":
+                sound = "Quack, Quack, Splash!";
+                break;
+            case "Penguin":
+                sound = "Squawk, Squawk, Whee!";
+                break;
+            case "Cat":
+                sound = "Meow, Meow, Meow!";
+                break;
+            case "Pony":
+                sound = "Neigh, Neigh, Yay!";
+                break;
+        }
     }
 
     public String getName() {
@@ -40,5 +55,9 @@ public class Item {
 
     public BigDecimal getPrice() {
         return price;
+    }
+
+    public void makeSound() {
+        System.out.println(sound);
     }
 }

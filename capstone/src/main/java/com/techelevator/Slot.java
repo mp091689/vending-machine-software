@@ -20,6 +20,7 @@ public class Slot {
 
     public void dispense() {
         this.quantity--;
+        this.item.makeSound();
     }
 
     public int getQuantity() {
