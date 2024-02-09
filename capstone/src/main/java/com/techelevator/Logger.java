@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 
 public class Logger {
     public void info(String information) {

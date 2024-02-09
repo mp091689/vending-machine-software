@@ -3,7 +3,12 @@ package com.techelevator;
 import java.math.BigDecimal;
 
 public class Account {
-    private BigDecimal balance = new BigDecimal("0.0");
+    private BigDecimal balance;
+
+    public Account() {
+        this.balance = new BigDecimal(0);
+        this.balance.setScale(2);
+    }
 
     public BigDecimal getBalance() {
         return balance;
@@ -30,9 +35,9 @@ public class Account {
         int quarters = balancePennies / 25;
         int dimes = (balancePennies % 25) / 10;
         int nickels = ((balancePennies % 25) % 10) / 5;
-        System.out.println("Your return coins are " + quarters + "quarters");
-        System.out.println("Your return coins are " + dimes + "dimes");
-        System.out.println("Your return coins are " + nickels + "nickels");
+        System.out.println("Your return coins are " + quarters + " quarters");
+        System.out.println("Your return coins are " + dimes + " dimes");
+        System.out.println("Your return coins are " + nickels + " nickels");
         int payBack = (quarters * 25 + dimes * 10) + nickels * 5;
 
         BigDecimal finalPennies = new BigDecimal(payBack);

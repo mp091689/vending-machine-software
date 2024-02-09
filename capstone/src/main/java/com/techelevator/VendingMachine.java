@@ -3,7 +3,10 @@ package com.techelevator;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class VendingMachine {
     Scanner scanner = new Scanner(System.in);
@@ -26,7 +29,6 @@ public class VendingMachine {
     }
 
     public void mainMenu() {
-
         String inputChoice = "";
         do {
             System.out.println();
@@ -41,7 +43,6 @@ public class VendingMachine {
                 purchaseMenu();
             }
         } while (!inputChoice.equals("3"));
-
     }
 
     private void displayItems() {
@@ -96,8 +97,8 @@ public class VendingMachine {
         try {
             int deposit = Integer.parseInt(input);
             if (account.deposit(deposit)) {
-                logger.info("FEED MONEY: " + deposit + " " + account.getBalance());
-            }else {
+                logger.info("FEED MONEY: $" + deposit + " $" + account.getBalance());
+            } else {
                 System.out.printf("\u001b[31mInvalid amount:\u001b[0m %d%n", deposit);
             }
         } catch (Exception e) {
@@ -113,14 +114,11 @@ public class VendingMachine {
 
         if (slots.containsKey(input)) {
             int itemQuantity = slots.get(input).getQuantity();
-            //System.out.println(itemQuantity);
             if (itemQuantity > 0) {
                 BigDecimal itemPrice = slots.get(input).getPrice();
-                //System.out.println(itemPrice);
                 if (account.withdraw(itemPrice)) {
                     slots.get(input).dispense();
-                    logger.info(slots.get(input).getName() + ": " + itemPrice + " " + account.getBalance());
-                    //System.out.println("Successful purchase.");
+                    logger.info(slots.get(input).getName() + ": $" + itemPrice + " $" + account.getBalance());
                 } else {
                     System.out.println("Insufficient funds.");
                 }
@@ -134,8 +132,6 @@ public class VendingMachine {
     }
 
     private void finishTransaction() {
-        //BigDecimal endingBalance = account.getBalance();
-        //account.returnCoins();
-        logger.info("GIVE CHANGE: " + account.returnCoins() + " " + account.getBalance());
+        logger.info("GIVE CHANGE: $" + account.returnCoins() + " $" + account.getBalance());
     }
 }

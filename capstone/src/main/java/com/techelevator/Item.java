@@ -21,10 +21,11 @@ public class Item {
 
     public Item(String input) {
         String[] parts = input.split(",");
-        this.slotLocation = parts[0];
-        this.name = parts[1];
-        this.price = new BigDecimal(parts[2]);
-        this.type = parts[3];
+        slotLocation = parts[0];
+        name = parts[1];
+        price = new BigDecimal(parts[2]);
+        price.setScale(2);
+        type = parts[3];
         switch (parts[3]) {
             case "Duck":
                 sound = "Quack, Quack, Splash!";
