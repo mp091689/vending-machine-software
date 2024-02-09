@@ -46,4 +46,13 @@ public class Account {
 
         return finalDollars;
     }
+
+    public boolean isValidBill(int deposit) {
+        for (int validBill : new int[]{1, 5, 10, 20}) {
+            if (validBill == deposit) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

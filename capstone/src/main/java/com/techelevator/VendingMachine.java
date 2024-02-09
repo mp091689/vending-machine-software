@@ -9,6 +9,9 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 public class VendingMachine {
+    private final String ANSI_RED = "\u001b[31m";
+    private final String ANSI_RESET = "\u001b[0m";
+    private final String ANSI_UNDERSCORE = "\u001b[4m";
     Scanner scanner = new Scanner(System.in);
     private SortedMap<String, Slot> slots = new TreeMap<>();
     private Account account = new Account();
@@ -47,7 +50,7 @@ public class VendingMachine {
 
     private void displayItems() {
         System.out.println();
-        System.out.printf("\033[4m%-5s %-20s %s\033[0m%n", "Slot", "Item Name", "Price");
+        System.out.printf("%s%-5s %-20s %s\033[0m%n", ANSI_UNDERSCORE, "Slot", "Item Name", "Price");
         for (Map.Entry<String, Slot> element : slots.entrySet()) {
             String location = element.getKey();
             String name = element.getValue().getName();
@@ -55,7 +58,7 @@ public class VendingMachine {
             if (element.getValue().getQuantity() <= 0) {
                 pricePlace = "SOLD OUT";
             }
-            System.out.printf("\u001b[32m%-5s\u001b[0m %-20s %s%n", location, name, pricePlace);
+            System.out.printf("%-5s %-20s %s%n", location, name, pricePlace);
         }
         System.out.println();
     }
@@ -96,13 +99,16 @@ public class VendingMachine {
         String input = scanner.nextLine();
         try {
             int deposit = Integer.parseInt(input);
-            if (account.deposit(deposit)) {
+
+            if (!account.isValidBill(deposit)) {
+                System.out.printf("%sInvalid bill %d%s.%nValid bills: 1, 5, 10, 20%n", ANSI_RED, deposit, ANSI_RESET);
+            } else if (account.deposit(deposit)) {
                 logger.info("FEED MONEY: $" + deposit + " $" + account.getBalance());
             } else {
-                System.out.printf("\u001b[31mInvalid amount:\u001b[0m %d%n", deposit);
+                System.out.printf("%sInvalid amount:%s %d%n", ANSI_RED, ANSI_RESET, deposit);
             }
         } catch (Exception e) {
-            System.out.printf("\u001b[31mInvalid input:\u001b[0m %s%n", input);
+            System.out.printf("%sInvalid input:%s %s%n", ANSI_RED, ANSI_RESET, input);
         }
     }
 
