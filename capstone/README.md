@@ -118,7 +118,6 @@ For example:
 >White Cat,0
 >Tabby Cat,0
 >Unicorn Pony,2
-
 >
 >**TOTAL SALES** $11.05
 >```
