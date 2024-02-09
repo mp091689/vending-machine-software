@@ -11,15 +11,22 @@ public class Logger {
     private boolean prefixTimeStamp = true;
 
     public Logger() {
-
     }
 
     public Logger(String fileName) {
         this.fileName = fileName;
     }
 
+    public boolean isPrefixTimeStamp() {
+        return prefixTimeStamp;
+    }
+
     public void setPrefixTimeStamp(boolean prefixTimeStamp) {
         this.prefixTimeStamp = prefixTimeStamp;
+    }
+
+    public String getFileName() {
+        return fileName;
     }
 
     public void info(String information) {
