@@ -33,6 +33,7 @@ public class VendingMachine {
             System.out.println("(1) Display Vending Machine Items");
             System.out.println("(2) Purchase");
             System.out.println("(3) Exit");
+            System.out.print("Please enter your choice: ");
             inputChoice = scanner.nextLine();
             if (inputChoice.equals("1")) {
                 displayItems();
@@ -44,11 +45,12 @@ public class VendingMachine {
     }
 
     private void displayItems() {
+        System.out.println();
         System.out.printf("\033[4m%-5s %-20s %s\033[0m%n", "Slot", "Item Name", "Price");
         for (Map.Entry<String, Slot> element : slots.entrySet()) {
             String location = element.getKey();
-            String name = element.getValue().getItem().getName();
-            String pricePlace = "$" + element.getValue().getItem().getPrice().toString();
+            String name = element.getValue().getName();
+            String pricePlace = "$" + element.getValue().getPrice().toString();
             if (element.getValue().getQuantity() <= 0) {
                 pricePlace = "SOLD OUT";
             }
@@ -61,11 +63,13 @@ public class VendingMachine {
         String inputChoice;
         boolean keepGoing = true;
         do {
+            System.out.println();
             System.out.println("Current Money Provided: $" + account.getBalance());
             System.out.println();
             System.out.println("(1) Feed Money");
             System.out.println("(2) Select Product");
             System.out.println("(3) Finish Transaction");
+            System.out.print("Please enter your choice: ");
             inputChoice = scanner.nextLine();
             switch (inputChoice) {
                 case "1":
@@ -92,7 +96,7 @@ public class VendingMachine {
         try {
             int deposit = Integer.parseInt(input);
             if (account.deposit(deposit)) {
-                logger.info("put money");
+                logger.info("FEED MONEY: " + deposit + " " + account.getBalance());
             }else {
                 System.out.printf("\u001b[31mInvalid amount:\u001b[0m %d%n", deposit);
             }
@@ -111,12 +115,12 @@ public class VendingMachine {
             int itemQuantity = slots.get(input).getQuantity();
             //System.out.println(itemQuantity);
             if (itemQuantity > 0) {
-                BigDecimal itemPrice = slots.get(input).getItem().getPrice();
+                BigDecimal itemPrice = slots.get(input).getPrice();
                 //System.out.println(itemPrice);
                 if (account.withdraw(itemPrice)) {
                     slots.get(input).dispense();
-                    logger.info("successful purchase");
-                    System.out.println("Successful purchase.");
+                    logger.info(slots.get(input).getName() + ": " + itemPrice + " " + account.getBalance());
+                    //System.out.println("Successful purchase.");
                 } else {
                     System.out.println("Insufficient funds.");
                 }
@@ -130,6 +134,6 @@ public class VendingMachine {
     }
 
     private void finishTransaction() {
-        logger.info("finish transaction");
+        logger.info("GIVE CHANGE:");
     }
 }

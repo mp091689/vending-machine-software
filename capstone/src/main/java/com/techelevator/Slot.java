@@ -1,5 +1,7 @@
 package com.techelevator;
 
+import java.math.BigDecimal;
+
 public class Slot {
     @Override
     public String toString() {
@@ -27,4 +29,17 @@ public class Slot {
     public Item getItem() {
         return item;
     }
+
+    public BigDecimal getPrice() {
+        return item.getPrice();
+    }
+
+    public String getName() {
+        return item.getName();
+    }
+
+    public String getNType() {
+        return item.getType();
+    }
+
 }
