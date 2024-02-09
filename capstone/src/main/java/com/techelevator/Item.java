@@ -19,7 +19,7 @@ public class Item {
     private BigDecimal price;
     private String sound;
 
-    public Item(String input) {
+    public Item(String input) throws Exception{
         String[] parts = input.split(",");
         slotLocation = parts[0];
         name = parts[1];
@@ -39,6 +39,8 @@ public class Item {
             case "Pony":
                 sound = "Neigh, Neigh, Yay!";
                 break;
+            default:
+                throw new Exception("Invalid animal");
         }
     }
 
