@@ -134,6 +134,9 @@ public class VendingMachine {
     }
 
     private void finishTransaction() {
-        logger.info("GIVE CHANGE:");
+        BigDecimal endingBalance = account.getBalance();
+        account.withdraw(endingBalance);
+
+        logger.info("GIVE CHANGE: " + endingBalance + " " + account.getBalance());
     }
 }
