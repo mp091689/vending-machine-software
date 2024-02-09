@@ -3,6 +3,8 @@ package com.techelevator;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.SortedMap;
@@ -40,10 +42,16 @@ public class VendingMachine {
             System.out.println("(3) Exit");
             System.out.print("Please enter your choice: ");
             inputChoice = scanner.nextLine();
-            if (inputChoice.equals("1")) {
-                displayItems();
-            } else if (inputChoice.equals("2")) {
-                purchaseMenu();
+            switch (inputChoice) {
+                case "1":
+                    displayItems();
+                    break;
+                case "2":
+                    purchaseMenu();
+                    break;
+                case "4":
+                    salesReport();
+                    break;
             }
         } while (!inputChoice.equals("3"));
     }
@@ -92,6 +100,21 @@ public class VendingMachine {
             }
         } while (keepGoing);
 
+    }
+
+    private void salesReport() {
+        String fileNameDateTimeStamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM-dd-yyyy-HH:mm:ss"));
+        Logger salesLogger = new Logger("report_" + fileNameDateTimeStamp + ".csv");
+        salesLogger.setPrefixTimeStamp(false);
+        BigDecimal total = new BigDecimal(0);
+        total.setScale(2);
+        for (Map.Entry<String, Slot> slot : slots.entrySet()) {
+            int soldItems = 5 - slot.getValue().getQuantity();
+            total = total.add(slot.getValue().getPrice().multiply(new BigDecimal(soldItems)));
+            salesLogger.info(slot.getValue().getName() + "," + soldItems);
+        }
+        salesLogger.info("");
+        salesLogger.info(String.format("**TOTAL SALES** $%s", total));
     }
 
     private void feedMoney() {
