@@ -35,9 +35,10 @@ public class Account {
         int quarters = balancePennies / 25;
         int dimes = (balancePennies % 25) / 10;
         int nickels = ((balancePennies % 25) % 10) / 5;
-        System.out.println("Your return coins are " + quarters + " quarters");
-        System.out.println("Your return coins are " + dimes + " dimes");
-        System.out.println("Your return coins are " + nickels + " nickels");
+        System.out.printf("Here is your change:");
+        System.out.println("    Quarters: " + quarters);
+        System.out.println("    Dimes:    " + dimes);
+        System.out.println("    Nickels:  " + nickels);
         int payBack = (quarters * 25 + dimes * 10) + nickels * 5;
 
         BigDecimal finalPennies = new BigDecimal(payBack);

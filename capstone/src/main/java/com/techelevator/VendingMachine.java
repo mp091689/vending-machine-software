@@ -27,11 +27,9 @@ public class VendingMachine {
                 Slot slot = new Slot(item);
                 slots.put(item.getSlotLocation(), slot);
             }
-
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
-        } catch (UnknownAnimalException e) {
-            System.out.println("Unknown animal");
+        } catch (Exception e) {
         }
     }
 
